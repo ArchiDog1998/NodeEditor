@@ -1,66 +1,85 @@
 ﻿<Page
     x:Class="NodeEditor.Views.Pages.EditorPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helix="http://helix-toolkit.org/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="clr-namespace:NodeEditor.ViewModels.Pages"
     xmlns:nodify="https://miroiu.github.io/nodify"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:NodeEditor.ViewModels.Pages"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:EditorViewModel />
     </Page.DataContext>
 
-    <nodify:NodifyEditor
-        Background="Transparent"
-        Connections="{Binding Connections}"
-        DisconnectConnectorCommand="{Binding DisconnectConnectorCommand}"
-        ItemsSource="{Binding Nodes}"
-        PendingConnection="{Binding PendingConnection}">
+    <Grid x:Name="MainGrid">
+        
+        <nodify:NodifyEditor
+            Background="Transparent"
+            Connections="{Binding Connections}"
+            DisconnectConnectorCommand="{Binding DisconnectConnectorCommand}"
+            ItemsSource="{Binding Nodes}"
+            PendingConnection="{Binding PendingConnection}">
 
-        <nodify:NodifyEditor.PendingConnectionTemplate>
-            <DataTemplate DataType="{x:Type vm:PendingConnectionViewModel}">
-                <nodify:PendingConnection
-                    AllowOnlyConnectors="True"
-                    CompletedCommand="{Binding FinishCommand}"
-                    StartedCommand="{Binding StartCommand}" />
-            </DataTemplate>
-        </nodify:NodifyEditor.PendingConnectionTemplate>
+            <nodify:NodifyEditor.PendingConnectionTemplate>
+                <DataTemplate DataType="{x:Type vm:PendingConnectionViewModel}">
+                    <nodify:PendingConnection
+                        AllowOnlyConnectors="True"
+                        CompletedCommand="{Binding FinishCommand}"
+                        StartedCommand="{Binding StartCommand}" />
+                </DataTemplate>
+            </nodify:NodifyEditor.PendingConnectionTemplate>
 
-        <nodify:NodifyEditor.ItemTemplate>
-            <DataTemplate DataType="{x:Type vm:NodeViewModel}">
-                <nodify:Node
-                    Header="{Binding Title}"
-                    Input="{Binding Inputs}"
-                    Output="{Binding Outputs}">
-                    <nodify:Node.InputConnectorTemplate>
-                        <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
-                            <nodify:NodeInput
-                                Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                Header="{Binding Title}"
-                                IsConnected="{Binding IsConnected}" />
-                        </DataTemplate>
-                    </nodify:Node.InputConnectorTemplate>
+            <nodify:NodifyEditor.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:NodeViewModel}">
+                    <nodify:Node
+                        Header="{Binding Title}"
+                        Input="{Binding Inputs}"
+                        Output="{Binding Outputs}">
+                        <nodify:Node.InputConnectorTemplate>
+                            <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
+                                <nodify:NodeInput
+                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                    Header="{Binding Title}"
+                                    IsConnected="{Binding IsConnected}" />
+                            </DataTemplate>
+                        </nodify:Node.InputConnectorTemplate>
 
-                    <nodify:Node.OutputConnectorTemplate>
-                        <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
-                            <nodify:NodeOutput
-                                Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                Header="{Binding Title}"
-                                IsConnected="{Binding IsConnected}" />
-                        </DataTemplate>
-                    </nodify:Node.OutputConnectorTemplate>
-                </nodify:Node>
-            </DataTemplate>
-        </nodify:NodifyEditor.ItemTemplate>
+                        <nodify:Node.OutputConnectorTemplate>
+                            <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
+                                <nodify:NodeOutput
+                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                    Header="{Binding Title}"
+                                    IsConnected="{Binding IsConnected}" />
+                            </DataTemplate>
+                        </nodify:Node.OutputConnectorTemplate>
+                    </nodify:Node>
+                </DataTemplate>
+            </nodify:NodifyEditor.ItemTemplate>
 
-        <nodify:NodifyEditor.ConnectionTemplate>
-            <DataTemplate DataType="{x:Type vm:ConnectionViewModel}">
-                <nodify:LineConnection Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}" />
-            </DataTemplate>
-        </nodify:NodifyEditor.ConnectionTemplate>
-    </nodify:NodifyEditor>
+            <nodify:NodifyEditor.ConnectionTemplate>
+                <DataTemplate DataType="{x:Type vm:ConnectionViewModel}">
+                    <nodify:LineConnection Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}" />
+                </DataTemplate>
+            </nodify:NodifyEditor.ConnectionTemplate>
+        </nodify:NodifyEditor>
+
+        <helix:HelixViewport3D
+            x:Name="View"
+            Background="Transparent"
+            ZoomExtentsWhenLoaded="True">
+            <helix:DefaultLights />
+        </helix:HelixViewport3D>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Button Content="{Binding StateString}" Command="{Binding SwitchOrderCommand}"/>
+        </StackPanel>
+    </Grid>
 </Page>

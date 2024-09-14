@@ -1,5 +1,4 @@
-﻿using NodeEditor.ViewModels.Windows;
-using Wpf.Ui;
+﻿using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -8,8 +7,7 @@ public partial class MainWindow : INavigationWindow
 {
     public MainWindow(
         IPageService pageService,
-        INavigationService navigationService
-    )
+        INavigationService navigationService)
     {
         SystemThemeWatcher.Watch(this);
 

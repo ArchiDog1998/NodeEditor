@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NodeEditor.Services;
-using NodeEditor.ViewModels.Pages;
-using NodeEditor.ViewModels.Windows;
 using NodeEditor.Views.Pages;
 using NodeEditor.Views.Windows;
 using System.IO;
@@ -46,7 +44,7 @@ public partial class App
 
             services.AddSingleton<DashboardPage>();
             services.AddSingleton<EditorPage>();
-            services.AddSingleton<ViewportPage>();
+            //services.AddSingleton<ViewportPage>();
             services.AddSingleton<SettingsPage>();
         }).Build();
 

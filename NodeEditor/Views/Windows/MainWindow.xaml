@@ -34,7 +34,7 @@
         <ui:NavigationView
             x:Name="RootNavigation"
             Grid.Row="1"
-            Padding="20"
+            Padding="0 10 0 0"
             FrameMargin="0"
             IsBackButtonVisible="Collapsed"
             IsPaneOpen="False"
@@ -49,9 +49,6 @@
                                        TargetPageType="{x:Type pages:EditorPage}"
                                        Icon="{ui:SymbolIcon Symbol=Edit24}" />
 
-                <ui:NavigationViewItem Content="3D Viewer" 
-                                       TargetPageType="{x:Type pages:ViewportPage}"
-                                       Icon="{ui:SymbolIcon Symbol=Box24}" />
             </ui:NavigationView.MenuItems>
 
             <ui:NavigationView.FooterMenuItems>
