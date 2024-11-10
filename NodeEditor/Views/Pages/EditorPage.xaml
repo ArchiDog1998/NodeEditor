@@ -31,9 +31,11 @@
             <nodify:NodifyEditor.PendingConnectionTemplate>
                 <DataTemplate DataType="{x:Type vm:PendingConnectionViewModel}">
                     <nodify:PendingConnection
-                        AllowOnlyConnectors="True"
-                        CompletedCommand="{Binding FinishCommand}"
-                        StartedCommand="{Binding StartCommand}" />
+                        EnablePreview="True"
+                        Source="{Binding Source, Mode=OneWayToSource}"
+                        PreviewTarget="{Binding PreviewTarget, Mode=OneWayToSource}"
+                        Content="{Binding Content}"
+                        CompletedCommand="{Binding FinishCommand}"/>
                 </DataTemplate>
             </nodify:NodifyEditor.PendingConnectionTemplate>
 
@@ -46,8 +48,8 @@
                         <nodify:Node.InputConnectorTemplate>
                             <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
                                 <nodify:NodeInput
-                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
                                     Header="{Binding Title}"
+                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
                                     IsConnected="{Binding IsConnected}" />
                             </DataTemplate>
                         </nodify:Node.InputConnectorTemplate>
@@ -55,8 +57,8 @@
                         <nodify:Node.OutputConnectorTemplate>
                             <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
                                 <nodify:NodeOutput
-                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
                                     Header="{Binding Title}"
+                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
                                     IsConnected="{Binding IsConnected}" />
                             </DataTemplate>
                         </nodify:Node.OutputConnectorTemplate>
@@ -69,6 +71,13 @@
                     <nodify:LineConnection Source="{Binding Source.Anchor}" Target="{Binding Target.Anchor}" />
                 </DataTemplate>
             </nodify:NodifyEditor.ConnectionTemplate>
+            
+            <nodify:NodifyEditor.ItemContainerStyle>
+                <Style TargetType="{x:Type nodify:ItemContainer}">
+                    <Setter Property="Location"
+                            Value="{Binding Location}" />
+                </Style>
+            </nodify:NodifyEditor.ItemContainerStyle>
         </nodify:NodifyEditor>
 
         <helix:HelixViewport3D

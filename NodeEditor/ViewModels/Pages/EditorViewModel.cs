@@ -14,9 +14,7 @@ public partial class EditorViewModel : ObservableObject
 
     public PendingConnectionViewModel PendingConnection { get; }
     public ObservableCollection<NodeViewModel> Nodes { get; } = [];
-
     public ObservableCollection<ConnectionViewModel> Connections { get; } = [];
-
     public ObservableCollection<Visual3D> Geometries { get; } = [];
 
     public event Action<Visual3D[], Visual3D[]>? GeometryChanged;
@@ -35,7 +33,7 @@ public partial class EditorViewModel : ObservableObject
 
     public EditorViewModel()
     {
-        PendingConnection = new (this);
+        PendingConnection = new PendingConnectionViewModel(this);
 
         Geometries.CollectionChanged += (s, e) =>
         {
@@ -48,33 +46,16 @@ public partial class EditorViewModel : ObservableObject
         var welcome = new NodeViewModel
         {
             Title = "Welcome",
-            Inputs =
-            [
-                new ConnectorViewModel
-                {
-                    Title = "In"
-                }
-            ],
-            Outputs =
-            [
-                new ConnectorViewModel
-                {
-                    Title = "Out"
-                }
-            ]
         };
+        welcome.Inputs.Add(new(){Title = "In"});
+        welcome.Inputs.Add(new(){Title = "In2"});
+        welcome.Outputs.Add(new(){Title = "Out"});
 
         var nodify = new NodeViewModel
         {
             Title = "To NodeEditor",
-            Inputs =
-            [
-                new ConnectorViewModel
-                {
-                    Title = "In"
-                }
-            ]
         };
+        nodify.Inputs.Add(new(){Title = "In"});
 
         Nodes.Add(welcome);
         Nodes.Add(nodify);
