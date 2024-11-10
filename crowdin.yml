@@ -1,0 +1,3 @@
+files:
+  - source: NodeEditor/Resources/I18n.resx
+    translation: /NodeEditor/Resources/I18n.%two_letters_code%.resx
