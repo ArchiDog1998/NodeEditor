@@ -202,7 +202,13 @@ public class DotVisual3D : ScreenSpaceVisual3D
             (int)element.ActualWidth + 1, (int)element.ActualHeight + 1, 96, 96, PixelFormats.Pbgra32);
         rtb.Render(element);
         rtb.Freeze();
-        _material = new EmissiveMaterial(new ImageBrush(rtb));
+        var brush = new ImageBrush(rtb);
+
+        var mg = new MaterialGroup();
+        mg.Children.Add(new DiffuseMaterial(brush));
+        mg.Children.Add(new EmissiveMaterial(brush));
+        mg.Freeze();
+        _material = mg;
         _ratio = element.ActualWidth / element.ActualHeight;
     }
 
