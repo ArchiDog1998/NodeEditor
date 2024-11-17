@@ -2,6 +2,7 @@
 using NodeEditor.ViewModels.Pages;
 using Nodify;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using Wpf.Ui.Controls;
 
 namespace NodeEditor.Views.Pages;
@@ -61,6 +62,15 @@ public partial class EditorPage : INavigableView<EditorViewModel>
 
 #if DEBUG
         ViewModel.Geometries.Add(new HelixToolkit.Wpf.TorusVisual3D() { Material = new System.Windows.Media.Media3D.DiffuseMaterial(new SolidColorBrush(Color.FromRgb(100, 100, 100))) });
+        
+        var visual3D = new DotVisual3D
+        {
+            Text = "Morning",
+            Color = Colors.Blue
+        };
+        visual3D.Points.Add(new Point3D());
+        ViewModel.Geometries.Add(visual3D);
 #endif
     }
 }
+
